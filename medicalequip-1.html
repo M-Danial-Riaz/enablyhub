@@ -225,7 +225,7 @@
                     </div>
                     <small class="pt-1">(0 Reviews)</small>
                 </div>
-                <h3 class="font-weight-semi-bold mb-4">₨ 5,000</h3>
+                <h3 class="font-weight-semi-bold mb-4">₨ <span id="total_amount">5,000</span></h3>
                 <p class="mb-4">The ultra-quiet SI 40 inhalation device by Beurer impresses with its effective application. Liquids such as saline solutions and essential oils can be safely vaporized by the Steam Vaporizer and colds don’t stand a chance!</p>
     
          
@@ -233,13 +233,13 @@
                     <button class="btn btn-primary px-3" style="margin-right: 55px;"><i class="fa fa-shopping-cart mr-1"></i>Select No. of Items</button>
                     <div class="input-group quantity mr-3" style="width: 130px;">
                         <div class="input-group-btn">
-                            <button class="btn btn-primary btn-minus">
+                            <button class="btn btn-primary btn-minus"  id="myButton-minus">
                             <i class="fa fa-minus"></i>
                             </button>
                         </div>
-                        <input type="text" class="form-control bg-secondary text-center" value="1">
+                        <input type="text" class="form-control bg-secondary text-center" value="0" id="inputField">
                         <div class="input-group-btn">
-                            <button class="btn btn-primary btn-plus">
+                            <button class="btn btn-primary btn-plus"  id="myButton-plus">
                                 <i class="fa fa-plus"></i>
                             </button>
                         </div>
@@ -359,7 +359,7 @@
                         <h3 style="color:blue;">Plan 1</h3>
                         <p>Full Payment</p>
                         <p>0% Interest</p>
-                        <p>One Time Payment</p>
+                        <p>RS: <span id="first_installment_plan">0</span></p>
                         <input type="radio" name="installmentPlan" value="Plan 1" id="plan1">
                         <label for="plan1">Select Plan</label>
                     </div>
@@ -367,7 +367,7 @@
                         <h3>Plan 2</h3>
                         <p>3 months</p>
                         <p>0% Interest</p>
-                        <p><span>$55</span>/month</p>
+                        <p>RS: <span id="second_installment_plan">0</span>/month</p>
                         <input type="radio" name="installmentPlan" value="Plan 2" id="plan2">
                         <label for="plan2">Select Plan</label>
                     </div>
@@ -375,7 +375,7 @@
                         <h3>Plan 3</h3>
                         <p>6 months</p>
                         <p>0% Interest</p>
-                        <p>$30/month</p>
+                        <p>RS: <span id="third_installment_plan">0</span>/month</p>
                         <input type="radio" name="installmentPlan" value="Plan 3" id="plan3">
                         <label for="plan3">Select Plan</label>
                     </div>
@@ -383,7 +383,7 @@
                         <h3>Plan 4</h3>
                         <p>12 months</p>
                         <p>0% Interest</p>
-                        <p>$15/month</p>
+                        <p>RS: <span id="forth_installment_plan">0</span>/month</p>
                         <input type="radio" name="installmentPlan" value="Plan 4" id="plan4">
                         <label for="plan4">Select Plan</label>
                     </div>
@@ -400,7 +400,7 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between mb-3 pt-1">
                     <h6 class="font-weight-medium">Subtotal</h6>
-                    <h6 class="font-weight-medium">RS 35,000</h6>
+                    <h6 class="font-weight-medium">RS: <span id="sub_total">0</span></h6>
                 </div>
                 <div class="d-flex justify-content-between">
                     <h6 class="font-weight-medium">Shipping</h6>
@@ -410,7 +410,7 @@
             <div class="card-footer border-secondary bg-transparent">
                 <div class="d-flex justify-content-between mt-2">
                     <h5 class="font-weight-bold">Total</h5>
-                    <h5 class="font-weight-bold">RS 35,000</h5>
+                    <h5 class="font-weight-bold">RS: <span id="final_amount">0</span></h5>
                 </div>
                 <button class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button>
             </div>
@@ -575,6 +575,103 @@ Mains operation
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+    <script>
+        // Get the value of #A and store it in a variable
+
+        // Define the oninput event function
+        $("#inputField").on("input", function () {
+            // Get the current value of the input field
+            let enter_val = $(this).val();
+            // alert(enter_val);
+            let total_amount = Number($("#total_amount").html().replace(/,/g, ''));
+            // alert(total_amount);
+
+            let final_amount = 0;
+
+            if (parseInt(enter_val) === 0 || enter_val === ""){
+                final_amount = 0
+            }
+            else{
+                final_amount = parseInt(enter_val) * parseInt(total_amount);
+            }
+
+            let second_installment_plan = Math.floor(final_amount/3);
+            let third_installment_plan = Math.floor(final_amount/6);
+            let forth_installment_plan = Math.floor(final_amount/12);
+
+            // Display the result in the #output div
+            $("#sub_total").html(final_amount);
+            $("#final_amount").html(final_amount);
+            $("#first_installment_plan").html(final_amount);
+            $("#second_installment_plan").html(second_installment_plan);
+            $("#third_installment_plan").html(third_installment_plan);
+            $("#forth_installment_plan").html(forth_installment_plan);
+
+        });
+
+        $("#myButton-minus").on("click", function () {
+            let enter_val = $("#inputField").val();
+            // alert(enter_val);
+            let total_amount = Number($("#total_amount").html().replace(/,/g, ''));
+            // alert(total_amount);
+
+            let final_amount = 0;
+
+            if (parseInt(enter_val) === 0 || enter_val === ""){
+                final_amount = 0
+            }
+            else{
+                final_amount = parseInt(enter_val) * parseInt(total_amount);
+            }
+
+            // alert(total_amount);
+
+            let second_installment_plan = Math.floor(final_amount/3);
+            let third_installment_plan = Math.floor(final_amount/6);
+            let forth_installment_plan = Math.floor(final_amount/12);
+
+            // Display the result in the #output div
+            $("#sub_total").html(final_amount);
+            $("#final_amount").html(final_amount);
+            $("#first_installment_plan").html(final_amount);
+            $("#second_installment_plan").html(second_installment_plan);
+            $("#third_installment_plan").html(third_installment_plan);
+            $("#forth_installment_plan").html(forth_installment_plan);
+        });
+
+
+        $("#myButton-plus").on("click", function () {
+            let enter_val = $("#inputField").val();
+            // alert(enter_val);
+            let total_amount = Number($("#total_amount").html().replace(/,/g, ''));
+            // alert(total_amount);
+
+            let final_amount = 0;
+
+            if (parseInt(enter_val) === 0 || enter_val === ""){
+                final_amount = 0
+            }
+            else{
+                final_amount = parseInt(enter_val) * parseInt(total_amount);
+            }
+
+            // alert(total_amount);
+
+            let second_installment_plan = Math.floor(final_amount/3);
+            let third_installment_plan = Math.floor(final_amount/6);
+            let forth_installment_plan = Math.floor(final_amount/12);
+
+            // Display the result in the #output div
+            $("#sub_total").html(final_amount);
+            $("#final_amount").html(final_amount);
+            $("#first_installment_plan").html(final_amount);
+            $("#second_installment_plan").html(second_installment_plan);
+            $("#third_installment_plan").html(third_installment_plan);
+            $("#forth_installment_plan").html(forth_installment_plan);
+        });
+
+    </script>
 
 
 </body></html>

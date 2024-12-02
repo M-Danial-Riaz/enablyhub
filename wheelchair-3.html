@@ -225,7 +225,7 @@
                     </div>
                     <small class="pt-1">(0 Reviews)</small>
                 </div>
-                <h3 class="font-weight-semi-bold mb-4"><span id="total_amount">₨ 70,000</span></h3>
+                <h3 class="font-weight-semi-bold mb-4">₨ <span id="total_amount">70,000</span></h3>
                 <p class="mb-4">This is a lightweight and durable mobility solution designed for convenience and comfort. Crafted from high-quality aluminum, it offers easy maneuverability and long-lasting reliability. Its ergonomic design includes a foldable frame for effortless storage and transport, making it ideal for both indoor and outdoor use. Perfect for individuals seeking mobility support without compromising on style or function.</p>
     
          
@@ -233,13 +233,13 @@
                     <button class="btn btn-primary px-3" style="margin-right: 55px;"><i class="fa fa-shopping-cart mr-1"></i>Select No. of Items</button>
                     <div class="input-group quantity mr-3" style="width: 130px;">
                         <div class="input-group-btn">
-                            <button class="btn btn-primary btn-minus" id="inputField">
+                            <button class="btn btn-primary btn-minus" id="myButton-minus">
                             <i class="fa fa-minus"></i>
                             </button>
                         </div>
-                        <input type="text" class="form-control bg-secondary text-center" value="1">
+                        <input type="text" class="form-control bg-secondary text-center" value="0" id="inputField">
                         <div class="input-group-btn">
-                            <button class="btn btn-primary btn-plus">
+                            <button class="btn btn-primary btn-plus" id="myButton-plus">
                                 <i class="fa fa-plus"></i>
                             </button>
                         </div>
@@ -359,7 +359,7 @@
                         <h3 style="color:blue;">Plan 1</h3>
                         <p>Full Payment</p>
                         <p>0% Interest</p>
-                        <p>One Time Payment</p>
+                        <p>RS: <span id="first_installment_plan">0</span></p>
                         <input type="radio" name="installmentPlan" value="Plan 1" id="plan1">
                         <label for="plan1">Select Plan</label>
                     </div>
@@ -367,7 +367,7 @@
                         <h3>Plan 2</h3>
                         <p>3 months</p>
                         <p>0% Interest</p>
-                        <p><span>$55</span>/month</p>
+                        <p>RS: <span id="second_installment_plan">0</span>/month</p>
                         <input type="radio" name="installmentPlan" value="Plan 2" id="plan2">
                         <label for="plan2">Select Plan</label>
                     </div>
@@ -375,7 +375,7 @@
                         <h3>Plan 3</h3>
                         <p>6 months</p>
                         <p>0% Interest</p>
-                        <p>$30/month</p>
+                        <p>RS: <span id="third_installment_plan">0</span>/month</p>
                         <input type="radio" name="installmentPlan" value="Plan 3" id="plan3">
                         <label for="plan3">Select Plan</label>
                     </div>
@@ -383,7 +383,7 @@
                         <h3>Plan 4</h3>
                         <p>12 months</p>
                         <p>0% Interest</p>
-                        <p>$15/month</p>
+                        <p>RS: <span id="forth_installment_plan">0</span>/month</p>
                         <input type="radio" name="installmentPlan" value="Plan 4" id="plan4">
                         <label for="plan4">Select Plan</label>
                     </div>
@@ -400,17 +400,17 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between mb-3 pt-1">
                     <h6 class="font-weight-medium">Subtotal</h6>
-                    <h6 class="font-weight-medium">$150</h6>
+                    <h6 class="font-weight-medium">RS: <span id="sub_total">0</span></h6>
                 </div>
                 <div class="d-flex justify-content-between">
                     <h6 class="font-weight-medium">Shipping</h6>
-                    <h6 class="font-weight-medium">$10</h6>
+                    <h6 class="font-weight-medium">Free</h6>
                 </div>
             </div>
             <div class="card-footer border-secondary bg-transparent">
                 <div class="d-flex justify-content-between mt-2">
                     <h5 class="font-weight-bold">Total</h5>
-                    <h5 class="font-weight-bold">$160</h5>
+                    <h5 class="font-weight-bold">RS: <span id="final_amount">0</span></h5>
                 </div>
                 <button class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button>
             </div>
@@ -608,41 +608,95 @@
         $("#inputField").on("input", function () {
             // Get the current value of the input field
             let enter_val = $(this).val();
-            alert(enter_val);
-            let total_amount = $("#total_amount").html();
+            // alert(enter_val);
+            let total_amount = Number($("#total_amount").html().replace(/,/g, ''));
+            // alert(total_amount);
 
-            // Combine both values
-            // let result = `Value 1: ${a}, Value 2: ${b}`;
+            let final_amount = 0;
+
+            if (parseInt(enter_val) === 0 || enter_val === ""){
+                final_amount = 0
+            }
+            else{
+                final_amount = parseInt(enter_val) * parseInt(total_amount);
+            }
+
+            let second_installment_plan = Math.floor(final_amount/3);
+            let third_installment_plan = Math.floor(final_amount/6);
+            let forth_installment_plan = Math.floor(final_amount/12);
 
             // Display the result in the #output div
-            $("#output").html(result);
+            $("#sub_total").html(final_amount);
+            $("#final_amount").html(final_amount);
+            $("#first_installment_plan").html(final_amount);
+            $("#second_installment_plan").html(second_installment_plan);
+            $("#third_installment_plan").html(third_installment_plan);
+            $("#forth_installment_plan").html(forth_installment_plan);
 
-            // Log the values to the console for debugging
-            console.log("Value 1:", a);
-            console.log("Value 2:", b);
         });
+
+        $("#myButton-minus").on("click", function () {
+            let enter_val = $("#inputField").val();
+            // alert(enter_val);
+            let total_amount = Number($("#total_amount").html().replace(/,/g, ''));
+            // alert(total_amount);
+
+            let final_amount = 0;
+
+            if (parseInt(enter_val) === 0 || enter_val === ""){
+                final_amount = 0
+            }
+            else{
+                final_amount = parseInt(enter_val) * parseInt(total_amount);
+            }
+
+            // alert(total_amount);
+
+            let second_installment_plan = Math.floor(final_amount/3);
+            let third_installment_plan = Math.floor(final_amount/6);
+            let forth_installment_plan = Math.floor(final_amount/12);
+
+            // Display the result in the #output div
+            $("#sub_total").html(final_amount);
+            $("#final_amount").html(final_amount);
+            $("#first_installment_plan").html(final_amount);
+            $("#second_installment_plan").html(second_installment_plan);
+            $("#third_installment_plan").html(third_installment_plan);
+            $("#forth_installment_plan").html(forth_installment_plan);
+        });
+
+
+        $("#myButton-plus").on("click", function () {
+            let enter_val = $("#inputField").val();
+            // alert(enter_val);
+            let total_amount = Number($("#total_amount").html().replace(/,/g, ''));
+            // alert(total_amount);
+
+            let final_amount = 0;
+
+            if (parseInt(enter_val) === 0 || enter_val === ""){
+                final_amount = 0
+            }
+            else{
+                final_amount = parseInt(enter_val) * parseInt(total_amount);
+            }
+
+            // alert(total_amount);
+
+            let second_installment_plan = Math.floor(final_amount/3);
+            let third_installment_plan = Math.floor(final_amount/6);
+            let forth_installment_plan = Math.floor(final_amount/12);
+
+            // Display the result in the #output div
+            $("#sub_total").html(final_amount);
+            $("#final_amount").html(final_amount);
+            $("#first_installment_plan").html(final_amount);
+            $("#second_installment_plan").html(second_installment_plan);
+            $("#third_installment_plan").html(third_installment_plan);
+            $("#forth_installment_plan").html(forth_installment_plan);
+        });
+
     </script>
-
-    <!-- <script>
-        // Get the value of #A and store it in a variable
-        let a = $("#A").html();
-
-        // Define the onclick function
-        $("#myButton").on("click", function () {
-            // Get a second value dynamically (e.g., from another element or input)
-            let b = "Second Value";
-
-            // Combine both values
-            let result = `Value 1: ${a}, Value 2: ${b}`;
-
-            // Display the result in the #output div
-            $("#output").html(result);
-
-            // Log the values to the console for debugging
-            console.log("Value 1:", a);
-            console.log("Value 2:", b);
-        });
-    </script> -->
 
 
 </body></html>
