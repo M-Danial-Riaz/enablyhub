@@ -225,7 +225,7 @@
                     </div>
                     <small class="pt-1">(0 Reviews)</small>
                 </div>
-                <h3 class="font-weight-semi-bold mb-4">₨ 70,000</h3>
+                <h3 class="font-weight-semi-bold mb-4"><span id="total_amount">₨ 70,000</span></h3>
                 <p class="mb-4">This is a lightweight and durable mobility solution designed for convenience and comfort. Crafted from high-quality aluminum, it offers easy maneuverability and long-lasting reliability. Its ergonomic design includes a foldable frame for effortless storage and transport, making it ideal for both indoor and outdoor use. Perfect for individuals seeking mobility support without compromising on style or function.</p>
     
          
@@ -233,7 +233,7 @@
                     <button class="btn btn-primary px-3" style="margin-right: 55px;"><i class="fa fa-shopping-cart mr-1"></i>Select No. of Items</button>
                     <div class="input-group quantity mr-3" style="width: 130px;">
                         <div class="input-group-btn">
-                            <button class="btn btn-primary btn-minus">
+                            <button class="btn btn-primary btn-minus" id="inputField">
                             <i class="fa fa-minus"></i>
                             </button>
                         </div>
@@ -366,7 +366,7 @@
                     <div class="plan">
                         <h3>Plan 2</h3>
                         <p>3 months</p>
-                        <p>3% Interest</p>
+                        <p>0% Interest</p>
                         <p><span>$55</span>/month</p>
                         <input type="radio" name="installmentPlan" value="Plan 2" id="plan2">
                         <label for="plan2">Select Plan</label>
@@ -374,7 +374,7 @@
                     <div class="plan">
                         <h3>Plan 3</h3>
                         <p>6 months</p>
-                        <p>5% Interest</p>
+                        <p>0% Interest</p>
                         <p>$30/month</p>
                         <input type="radio" name="installmentPlan" value="Plan 3" id="plan3">
                         <label for="plan3">Select Plan</label>
@@ -382,7 +382,7 @@
                     <div class="plan">
                         <h3>Plan 4</h3>
                         <p>12 months</p>
-                        <p>7% Interest</p>
+                        <p>0% Interest</p>
                         <p>$15/month</p>
                         <input type="radio" name="installmentPlan" value="Plan 4" id="plan4">
                         <label for="plan4">Select Plan</label>
@@ -599,6 +599,50 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+    <script>
+        // Get the value of #A and store it in a variable
+        let a = $("#A").html();
+
+        // Define the oninput event function
+        $("#inputField").on("input", function () {
+            // Get the current value of the input field
+            let enter_val = $(this).val();
+            alert(enter_val);
+            let total_amount = $("#total_amount").html();
+
+            // Combine both values
+            // let result = `Value 1: ${a}, Value 2: ${b}`;
+
+            // Display the result in the #output div
+            $("#output").html(result);
+
+            // Log the values to the console for debugging
+            console.log("Value 1:", a);
+            console.log("Value 2:", b);
+        });
+    </script>
+
+    <!-- <script>
+        // Get the value of #A and store it in a variable
+        let a = $("#A").html();
+
+        // Define the onclick function
+        $("#myButton").on("click", function () {
+            // Get a second value dynamically (e.g., from another element or input)
+            let b = "Second Value";
+
+            // Combine both values
+            let result = `Value 1: ${a}, Value 2: ${b}`;
+
+            // Display the result in the #output div
+            $("#output").html(result);
+
+            // Log the values to the console for debugging
+            console.log("Value 1:", a);
+            console.log("Value 2:", b);
+        });
+    </script> -->
 
 
 </body></html>
